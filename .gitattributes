@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+gradlew linguist-vendored
+gradlew.bat linguist-vendored
+gradle/** linguist-vendored
+*.gradle linguist-vendored
