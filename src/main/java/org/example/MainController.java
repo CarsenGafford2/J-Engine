@@ -21,7 +21,7 @@ public class MainController {
     private Canvas canvas;
 
     @FXML
-    private TreeView fileView;
+    private TreeView<String> fileView;
 
     @FXML
     private BorderPane root;
@@ -40,9 +40,55 @@ public class MainController {
         canvas.widthProperty().addListener(e -> draw());
         canvas.heightProperty().addListener(e -> draw());
 
-        File projectDir = new File("C:/IHATEONEDRIVE/deepQ");
+        String projectDirPath = System.getProperty("project.dir", "C:/IHATEONEDRIVE/deepQ");
+        File projectDir = new File(projectDirPath);
         TreeItem<String> rootItem = createNode(projectDir);
         fileView.setRoot(rootItem);
+
+        newProject.setOnAction(e -> {
+            javafx.stage.DirectoryChooser chooser = new javafx.stage.DirectoryChooser();
+            chooser.setTitle("Select project location");
+            File selectedDir = chooser.showDialog(root.getScene().getWindow());
+            if (selectedDir == null) {
+                return;
+            }
+
+            var dialog = new javafx.scene.control.TextInputDialog("NewProject");
+            dialog.setTitle("New Project");
+            dialog.setHeaderText("Create new project");
+            dialog.setContentText("Project name:");
+            var result = dialog.showAndWait();
+            result.ifPresent(name -> {
+                File newFolder = new File(selectedDir, name);
+                if (!newFolder.exists() && !newFolder.mkdirs()) {
+                    System.err.println("Failed to create project folder: " + newFolder.getAbsolutePath());
+                    return;
+                }
+                cloneStartingFile("/beeMovieScript.txt", newFolder);
+                TreeItem<String> newRoot = createNode(newFolder);
+                fileView.setRoot(newRoot);
+            });
+        });
+    }
+
+    private File cloneStartingFile(String resourceName, File projectDir) {
+        if (!projectDir.exists() && !projectDir.mkdirs()) {
+            System.err.println("Failed to create project directory: " + projectDir.getAbsolutePath());
+        }
+
+        File exampleStartingFile = new File(projectDir, "beeMovieScript.txt");
+        try (var in = MainController.class.getResourceAsStream(resourceName)) {
+            if (in != null) {
+                java.nio.file.Files.copy(in, exampleStartingFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            } else {
+                if (!exampleStartingFile.exists()) {
+                    exampleStartingFile.createNewFile();
+                }
+            }
+        } catch (java.io.IOException ex) {
+            ex.printStackTrace();
+        }
+        return exampleStartingFile;
     }
 
     private void draw() {
