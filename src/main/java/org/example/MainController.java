@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
 import java.io.File;
@@ -22,14 +23,27 @@ public class MainController {
     private TreeView fileView;
 
     @FXML
+    private BorderPane root;
+
+    @FXML
     public void initialize() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.RED);
         gc.fillRect(0, 0, 600, 600);
+        canvas.widthProperty().bind(root.widthProperty().subtract(200));
+        canvas.heightProperty().bind(root.heightProperty().subtract(100));
+
+        canvas.widthProperty().addListener(e -> draw());
+        canvas.heightProperty().addListener(e -> draw());
 
         File projectDir = new File("C:/IHATEONEDRIVE/deepQ");
         TreeItem<String> rootItem = createNode(projectDir);
         fileView.setRoot(rootItem);
+    }
+    private void draw() {
+        var gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.RED);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     private TreeItem<String> createNode(File file) {
