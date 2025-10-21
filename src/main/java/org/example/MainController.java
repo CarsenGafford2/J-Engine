@@ -24,6 +24,9 @@ public class MainController {
     @FXML
     private MenuItem newProject;
 
+    @FXML
+    private MenuItem loadProject;
+
     private FileManager fileManager;
     private CanvasDrawer canvasDrawer;
 
@@ -36,5 +39,6 @@ public class MainController {
         fileManager.initialize();
 
         newProject.setOnAction(e -> fileManager.createNewProject(root));
+        loadProject.setOnAction(e -> fileManager.loadProject(root));
     }
 }

@@ -73,6 +73,19 @@ public class FileManager {
     }
 
     /**
+     * Loads an existing project by selecting a directory.
+     * @param root The root BorderPane of the application.
+     */
+    public void loadProject(BorderPane root) {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Select project to load");
+        File selectedDir = chooser.showDialog(root.getScene().getWindow());
+        if (selectedDir != null && selectedDir.isDirectory()) {
+            fileView.setRoot(createNode(selectedDir));
+        }
+    }
+
+    /**
      * Creates a TreeItem node for the given file and its children.
      * @param file The file to create a node for.
      * @return TreeItem<String> representing the file and its children.
