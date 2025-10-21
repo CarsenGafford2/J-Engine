@@ -1,6 +1,6 @@
 ### Gradle ###
-/build/
-/.gradle/
+build/
+.gradle/
 /out/
 !**/src/main/**/out/
 !**/src/test/**/out/
@@ -32,6 +32,9 @@ bin/
 /dist/
 /nbdist/
 .nb-gradle/
+
+### Zed ###
+.zed/
 
 ### VS Code ###
 .vscode/
