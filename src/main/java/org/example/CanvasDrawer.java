@@ -21,7 +21,7 @@ public class CanvasDrawer {
 
     public void initialize() {
         canvas.widthProperty().bind(root.widthProperty().subtract(200));
-        canvas.heightProperty().bind(root.heightProperty().subtract(100));
+        canvas.heightProperty().bind(canvas.widthProperty().multiply(0.5));
 
         canvas.widthProperty().addListener(e -> draw());
         canvas.heightProperty().addListener(e -> draw());
