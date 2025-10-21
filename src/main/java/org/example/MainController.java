@@ -3,6 +3,7 @@ package org.example;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
@@ -26,6 +27,9 @@ public class MainController {
     private BorderPane root;
 
     @FXML
+    private MenuItem newProject;
+
+    @FXML
     public void initialize() {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.RED);
@@ -40,6 +44,7 @@ public class MainController {
         TreeItem<String> rootItem = createNode(projectDir);
         fileView.setRoot(rootItem);
     }
+
     private void draw() {
         var gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.RED);

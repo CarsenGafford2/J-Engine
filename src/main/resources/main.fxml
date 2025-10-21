@@ -15,7 +15,7 @@
             <menus>
                 <Menu text="File">
                     <items>
-                        <MenuItem text="New Project" />
+                        <MenuItem fx:id="newProject" text="New Project" />
                         <MenuItem text="Load Project" />
                     </items>
                 </Menu>
