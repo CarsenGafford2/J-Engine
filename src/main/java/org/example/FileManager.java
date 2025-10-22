@@ -24,9 +24,7 @@ public class FileManager {
     }
 
     public void initialize() {
-        String projectDirPath = System.getProperty("project.dir", "C:/IHATEONEDRIVE/deepQ");
-        File projectDir = new File(projectDirPath);
-        fileView.setRoot(createNode(projectDir));
+
     }
 
     /**
